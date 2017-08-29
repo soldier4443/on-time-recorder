@@ -18,7 +18,6 @@ import android.widget.RelativeLayout;
 
 
 import com.squareup.otto.Subscribe;
-import com.turastory.ontimerecorder.bus.AddTagEvent;
 import com.turastory.ontimerecorder.bus.Bus;
 
 import java.util.ArrayList;
@@ -37,6 +36,12 @@ public class TagActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     @BindView(R.id.add_tag_button)
     Button addTagButton;
+    @BindView(R.id.add_tag_container)
+    RelativeLayout addTagContainer;
+    @BindView(R.id.tag_edit_text)
+    EditText tagEditText;
+    @BindView(R.id.confirm_button)
+    ImageButton confirmButton;
 
     private ArrayList<Tag> tagList;
     private TagAdapter adapter;
@@ -51,8 +56,15 @@ public class TagActivity extends AppCompatActivity {
         setupRecyclerView();
 
         addTagButton.setOnClickListener(v -> {
-            DialogFragment newFragment = AddTagDialogFragment.newInstance();
-            newFragment.show(getSupportFragmentManager(), "dialog");
+            addTagButton.setVisibility(View.INVISIBLE);
+            addTagContainer.setVisibility(View.VISIBLE);
+        });
+
+        confirmButton.setOnClickListener(v -> {
+            addTagButton.setVisibility(View.VISIBLE);
+            addTagContainer.setVisibility(View.INVISIBLE);
+
+            addNewTag(tagEditText.getText().toString());
         });
     }
 
@@ -124,12 +136,6 @@ public class TagActivity extends AppCompatActivity {
         intent.putExtra("tag", tagList.get(position));
 
         setResult(MainActivity.SUCCESS, intent);
-    }
-
-    // Called from AddTagDialogFragment
-    @Subscribe
-    public void onAddTagSubmit(AddTagEvent event) {
-        addNewTag(event.getTagName());
     }
 
     private void addNewTag(String name) {
