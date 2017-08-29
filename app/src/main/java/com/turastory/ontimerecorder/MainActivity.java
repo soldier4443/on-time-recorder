@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         textAnimation.setIntValues(0xff000000, 0xffffffff);
         textAnimation.setEvaluator(new ArgbEvaluator());
         textAnimation.addUpdateListener(animation -> {
-            titleText.setTextColor((int)animation.getAnimatedValue());
+//            titleText.setTextColor((int)animation.getAnimatedValue());
             timerText.setTextColor((int)animation.getAnimatedValue());
         } );
         textAnimation.setDuration(250);

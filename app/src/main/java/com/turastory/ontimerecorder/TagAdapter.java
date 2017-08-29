@@ -39,6 +39,21 @@ public class TagAdapter extends RecyclerView.Adapter<TagAdapter.ViewHolder> {
         return tagList.size();
     }
 
+    public void add(Tag tag, int position) {
+        tagList.add(position, tag);
+        notifyItemInserted(position);
+    }
+
+    public void add(Tag tag) {
+        tagList.add(tag);
+        notifyItemInserted(tagList.size() - 1);
+    }
+
+    public void remove(int position) {
+        tagList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.tag_text)
